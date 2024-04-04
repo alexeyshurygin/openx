@@ -11,11 +11,13 @@ component "Quotes" as q
 component "Trade Feed" as t
 database "Trades\nDB" as tdb
 database "Quotes\nDB" as qdb
+database "FIX\nDB" as fdb
 component "Reporting" as rep
 actor "FIX" as f
 actor "HTTP" as h
 actor "WS" as w
 f-down->r:Order
+f->fdb:Fix messages
 r->m:Order
 m->e:Order
 e->r:Execution Report
