@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+title "Execution Engine Layout"
+component "Matching Engine &\nOrder Book" as e
+component "Order Router" as r
+component "Risk and Margining" as m
+component "Instrument Database" as i
+component "Quote Delivery" as qd
+component "Quotes" as q
+component "Trade Feed" as t
+database "Trades\nDB" as tdb
+database "Quotes\nDB" as qdb
+component "Reporting" as rep
+actor "FIX" as f
+actor "HTTP" as h
+actor "WS" as w
+f-down->r:Order
+r->m:Order
+m->e:Order
+e->r:Execution Report
+r-up->f:Execution Report
+e->q:Quotes
+e-down->t:Trades
+q-down->qd:Quotes
+qd->w:Quotes
+e-down->tdb:Trades
+q-down->qdb:Quotes
+rep->f:Reports
+rep->h:Reports
+'i-up->m:Instruments
+'i-up->r:Instruments
+'i-up->e:Instruments
+
+footer Updated %date()
+
+@enduml
